@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary_material_light</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_light_1</item>
-        <item name="colorAccent">@color/accent_material_light</item>
+        <item name="colorPrimary">#00BCD4</item>
+        <item name="colorPrimaryDark">#00796B</item>
+        <item name="colorAccent">#DCE775</item>
     </style>
 
 </resources>
