@@ -7,6 +7,7 @@
               android:baselineAligned="false"
               android:divider="?android:attr/dividerHorizontal"
               android:orientation="horizontal"
+              android:background="?attr/colorAccent"
               tools:context="cz.muni.fi.pv256.movio2.uco_422196.PV256aktivita">
 
     <fragment

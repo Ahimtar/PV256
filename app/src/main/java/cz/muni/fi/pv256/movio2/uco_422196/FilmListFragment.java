@@ -29,7 +29,6 @@ public class FilmListFragment extends Fragment {
     private int mPosition = ListView.INVALID_POSITION;
     private OnFilmSelectListener mListener;
     private Context mContext;
-    private RecyclerView mListView;
     private ArrayList<Film> mFilmList = new ArrayList<>();
     private Button mButton1;
     private Button mButton2;
@@ -96,10 +95,6 @@ public class FilmListFragment extends Fragment {
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
-
-            if (mPosition != ListView.INVALID_POSITION) {
-                //mListView.smoothScrollToPosition(mPosition);
-            }
         }
 
         return view;

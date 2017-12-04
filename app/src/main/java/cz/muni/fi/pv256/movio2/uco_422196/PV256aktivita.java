@@ -18,7 +18,6 @@ public class PV256aktivita extends AppCompatActivity
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            //setContentView(R.layout.news_articles);
 
             setContentView(R.layout.activity_pv256aktivita);
             if (findViewById(R.id.film_detail_container) != null) {
