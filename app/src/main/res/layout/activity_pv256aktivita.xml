@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
@@ -13,5 +14,13 @@
         tools:layout_editor_absoluteX="44dp"
         tools:layout_editor_absoluteY="39dp"/>
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/fragment_main"
+              android:name="cz.muni.fi.pv256.movio2.uco_422196.FilmListFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="cz.muni.fi.pv256.movio2.uco_422196.PV256aktivita"
+              tools:layout="@android:layout/list_content" />
 
 </android.support.constraint.ConstraintLayout>
