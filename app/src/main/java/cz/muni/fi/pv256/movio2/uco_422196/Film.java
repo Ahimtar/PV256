@@ -8,26 +8,26 @@ import android.os.Parcelable;
  */
 
 public class Film implements Parcelable {
-    private long mRealeaseDate;
+    private long mReleaseDate;
     private String mCoverPath;
     private String mTitle;
     private String mBackdrop;
     private float mPopularity;
 
-    public Film(long realeaseDate, String coverPath, String title, String backdrop, float popularity) {
-        mRealeaseDate = realeaseDate;
+    public Film(long releaseDate, String coverPath, String title, String backdrop, float popularity) {
+        mReleaseDate = releaseDate;
         mCoverPath = coverPath;
         mTitle = title;
         mBackdrop = backdrop;
         mPopularity = popularity;
     }
 
-    public long getRealeaseDate() {
-        return mRealeaseDate;
+    public long getReleaseDate() {
+        return mReleaseDate;
     }
 
-    public void setRealeaseDate(long realeaseDate) {
-        mRealeaseDate = realeaseDate;
+    public void setReleaseDate(long releaseDate) {
+        mReleaseDate = releaseDate;
     }
 
     public String getCoverPath() {
@@ -68,7 +68,7 @@ public class Film implements Parcelable {
     }
 
     protected Film(Parcel in) {
-        mRealeaseDate = in.readLong();
+        mReleaseDate = in.readLong();
         mCoverPath = in.readString();
         mTitle = in.readString();
         mBackdrop = in.readString();
@@ -77,7 +77,7 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mRealeaseDate);
+        dest.writeLong(mReleaseDate);
         dest.writeString(mCoverPath);
         dest.writeString(mTitle);
         dest.writeString(mBackdrop);
