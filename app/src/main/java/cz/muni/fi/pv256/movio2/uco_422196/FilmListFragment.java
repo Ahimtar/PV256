@@ -1,9 +1,13 @@
 package cz.muni.fi.pv256.movio2.uco_422196;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +35,7 @@ public class FilmListFragment extends Fragment {
     private OnFilmSelectListener mListener;
     private Context mContext;
     private ArrayList<Film> mFilmList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
     private Button mButton1;
     private Button mButton2;
     private Button mButton3;
@@ -63,46 +69,59 @@ public class FilmListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        mFilmList.add(new Film( getCurrentTime().getTime(),"", "Popis1 Popis1 Popis1 Popis1", "Nazov1", 0.0f));
-        mFilmList.add(new Film( getCurrentTime().getTime(),"", "Popis2 Popis2 Popis2 Popis2", "Nazov2", 0.0f));
-        mFilmList.add(new Film( getCurrentTime().getTime(),"", "Popis3 Popis3 Popis3 Popis3", "Nazov3", 0.0f));
 
-        mButton1 = (Button) view.findViewById(R.id.film1);
-        mButton2 = (Button) view.findViewById(R.id.film2);
-        mButton3 = (Button) view.findViewById(R.id.film3);
-
-        mButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onFilmSelect(mFilmList.get(0));
+        if (!fillRecyclerView(view)) {
+            view = inflater.inflate(R.layout.empty_layout, container, false);
+            if (!online()) {
+                ((TextView) (view.findViewById(R.id.emptyText))).setText("Offline");
             }
-        });
-
-        mButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onFilmSelect(mFilmList.get(1));
-            }
-        });
-
-        mButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.onFilmSelect(mFilmList.get(2));
-            }
-        });
-
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
-            mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
+        else {
+            if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+                mPosition = savedInstanceState.getInt(SELECTED_KEY);
 
+                if (mPosition != ListView.INVALID_POSITION) {
+                    mRecyclerView.smoothScrollToPosition(mPosition);
+                }
+            }
+        }
         return view;
     }
 
     private Date getCurrentTime() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         return cal.getTime();
+    }
+
+    public boolean online() {
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network = cm.getActiveNetworkInfo();
+        return (network != null && network.isConnected());
+    }
+
+    private boolean fillRecyclerView(View rootView) {
+        mFilmList = FilmData.getInstance().getFilmList();
+
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_films);
+
+        if (mFilmList != null && !mFilmList.isEmpty()) {
+            setAdapter(mRecyclerView, mFilmList);
+            return true;
+        }
+        return false;
+    }
+
+    private void setAdapter(RecyclerView filmRV, final ArrayList<Film> filmList) {
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(filmList, mContext, this);
+        filmRV.setAdapter(adapter);
+        filmRV.setLayoutManager(new LinearLayoutManager(mContext));
+        filmRV.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    public void clickedFilm(int position)
+    {
+        mPosition = position;
+        mListener.onFilmSelect(mFilmList.get(position));
     }
 
     @Override
@@ -113,14 +132,14 @@ public class FilmListFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void setListener(Button button, final int position, final ArrayList<Film> filmList) {
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mPosition = position;
-                mListener.onFilmSelect(filmList.get(position));
-            }
-        });
-    }
+    //private void setListener(Button button, final int position, final ArrayList<Film> filmList) {
+    //    button.setOnClickListener(new View.OnClickListener() {
+    //        public void onClick(View v) {
+    //            mPosition = position;
+    //            mListener.onFilmSelect(filmList.get(position));
+    //        }
+    //    });
+    //}
 
     public interface OnFilmSelectListener {
         void onFilmSelect(Film film);

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PV256projekt</string>
+    <string-array name="menu_items">
+        <item name="new">New</item>
+        <item name="popular">Popular</item>
+    </string-array>
 </resources>

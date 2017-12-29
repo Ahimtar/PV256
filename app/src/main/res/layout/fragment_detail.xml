@@ -4,17 +4,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/detail_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/detail_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/detail_icon"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="10pt"/>
 
@@ -22,14 +30,13 @@
             android:id="@+id/detail_film_low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/detail_icon"
+            android:layout_below="@id/detail_film"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="8pt"/>
 
-        <ImageView
-            android:id="@+id/detail_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>

@@ -4,29 +4,17 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_films"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="@null" />
 
-        <Button
-            android:id="@+id/film1"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Film 1"/>
-
-        <Button
-            android:id="@+id/film2"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Film 2"/>
-
-        <Button
-            android:id="@+id/film3"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Film 3"/>
-
-    </LinearLayout>
+    <ViewStub
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout="@layout/empty_layout"/>
 
 </FrameLayout>
