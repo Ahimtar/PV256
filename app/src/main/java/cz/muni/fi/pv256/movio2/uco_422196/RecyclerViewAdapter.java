@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ja on 29.12.2017.
@@ -22,10 +24,10 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private Context mAppContext;
-    private ArrayList<Film> mFilmList;
+    private List<Object> mFilmList;
     private FilmListFragment mFilmListFragment;
 
-    public RecyclerViewAdapter(ArrayList<Film> filmList, Context context, FilmListFragment filmListFragment) {
+    public RecyclerViewAdapter(List<Object> filmList, Context context, FilmListFragment filmListFragment) {
         mFilmList = filmList;
         mFilmListFragment = filmListFragment;
         mAppContext = context.getApplicationContext();
@@ -52,44 +54,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Film film = mFilmList.get(position);
-        Log.d("Binding", "Binding " + film.getTitle());
-        holder.text.setText(film.getTitle());
-        holder.popularity.setText(String.valueOf(film.getPopularity()));
+        if(mFilmList.get(position) instanceof Film) {
+            Film film = (Film) mFilmList.get(position);
+            Log.d("Binding", "Binding " + film.getTitle());
+            holder.text.setText(film.getTitle());
+            holder.popularity.setText(String.valueOf(film.getPopularity()));
+            int coverId = mAppContext.getResources().getIdentifier(film.getSmallPath(), "drawable", mAppContext.getPackageName());
+            Drawable cover = mAppContext.getResources().getDrawable(coverId);
+            holder.coverImageView.setImageDrawable(cover);
 
-        int coverId = mAppContext.getResources().getIdentifier(film.getBackdrop(), "drawable", mAppContext.getPackageName());
-        Drawable cover = mAppContext.getResources().getDrawable(coverId);
-        holder.coverIv.setImageDrawable(cover);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mFilmListFragment.clickedFilm(position);
+                }
+            });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFilmListFragment.clickedFilm(position);
-            }
-        });
+            Palette palette = Palette.generate(BitmapFactory.decodeResource(mAppContext.getResources(), coverId));
+            int backgroundColorOpaque = palette.getDarkVibrantColor(0x000000);
+            int backgroundColorTransparent = Color.argb(128, Color.red(backgroundColorOpaque), Color.green(backgroundColorOpaque), Color.blue(backgroundColorOpaque));
+            GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.TRANSPARENT, backgroundColorOpaque});
+            holder.text.setBackgroundColor(backgroundColorTransparent);
+            holder.popularity.setBackgroundColor(backgroundColorOpaque);
+            holder.itemView.setTag(film);
+        }
+        else
+        {
+            holder.text.setTextColor(0xff0000ff);
+            holder.text.setText((String) mFilmList.get(position));
+        }
 
-        Palette palette = Palette.generate(BitmapFactory.decodeResource(mAppContext.getResources(), coverId));
-        int backgroundColorOpaque = palette.getDarkVibrantColor(0x000000);
-        int backgroundColorTransparent = Color.argb(128, Color.red(backgroundColorOpaque), Color.green(backgroundColorOpaque), Color.blue(backgroundColorOpaque));
-        GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[] {Color.TRANSPARENT, backgroundColorOpaque});
-        holder.text.setBackgroundColor(backgroundColorTransparent);
-        holder.star.setBackground(gd);
-        holder.popularity.setBackgroundColor(backgroundColorOpaque);
-
-        holder.itemView.setTag(film);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView coverIv;
+        private ImageView coverImageView;
         public TextView text;
-        public ImageView star;
         public TextView popularity;
 
         public ViewHolder(View view) {
             super(view);
             text = (TextView) itemView.findViewById(R.id.list_item_text);
-            coverIv = (ImageView) view.findViewById(R.id.list_item_icon);
-            star = (ImageView) itemView.findViewById(R.id.list_item_star);
+            coverImageView = (ImageView) view.findViewById(R.id.list_item_icon);
             popularity = (TextView) itemView.findViewById(R.id.list_item_popularity);
         }
     }

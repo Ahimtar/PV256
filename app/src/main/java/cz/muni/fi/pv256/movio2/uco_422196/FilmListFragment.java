@@ -13,13 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -34,11 +34,8 @@ public class FilmListFragment extends Fragment {
     private int mPosition = ListView.INVALID_POSITION;
     private OnFilmSelectListener mListener;
     private Context mContext;
-    private ArrayList<Film> mFilmList = new ArrayList<>();
+    private List<Object> mFilmList;
     private RecyclerView mRecyclerView;
-    private Button mButton1;
-    private Button mButton2;
-    private Button mButton3;
 
     @Override
     public void onAttach(Context activity) {
@@ -100,7 +97,11 @@ public class FilmListFragment extends Fragment {
     }
 
     private boolean fillRecyclerView(View rootView) {
-        mFilmList = FilmData.getInstance().getFilmList();
+        mFilmList = new ArrayList<Object>();
+        mFilmList.add("New");
+        mFilmList.addAll(FilmData.getInstance().getFilmNewList());
+        mFilmList.add("Popular");
+        mFilmList.addAll(FilmData.getInstance().getFilmPopularList());
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_films);
 
@@ -111,7 +112,7 @@ public class FilmListFragment extends Fragment {
         return false;
     }
 
-    private void setAdapter(RecyclerView filmRV, final ArrayList<Film> filmList) {
+    private void setAdapter(RecyclerView filmRV, final List<Object> filmList) {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(filmList, mContext, this);
         filmRV.setAdapter(adapter);
         filmRV.setLayoutManager(new LinearLayoutManager(mContext));
@@ -121,7 +122,7 @@ public class FilmListFragment extends Fragment {
     public void clickedFilm(int position)
     {
         mPosition = position;
-        mListener.onFilmSelect(mFilmList.get(position));
+        mListener.onFilmSelect((Film)mFilmList.get(position));
     }
 
     @Override
