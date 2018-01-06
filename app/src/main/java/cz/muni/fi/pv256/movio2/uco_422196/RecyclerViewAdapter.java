@@ -51,7 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewIsFilm) {
         LayoutInflater inflater = (LayoutInflater) mAppContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Log.d("Inflating", "Inflating " + parent.getId());
+        if (BuildConfig.logging) {
+            Log.d("Inflating", "Inflating " + parent.getId());
+        }
         View view;
         if (viewIsFilm == 0){
             view = inflater.inflate(R.layout.category, parent, false);
@@ -69,7 +71,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             FilmViewHolder filmHolder = (FilmViewHolder) holder;
             Film film = (Film) mFilmList.get(position);
-            Log.d("Binding", "Binding " + film.getTitle());
+            if (BuildConfig.logging) {
+                Log.d("Binding", "Binding " + film.getTitle());
+            }
             filmHolder.text.setText(film.getTitle());
             filmHolder.popularity.setText(String.valueOf(film.getPopularity()));
             int coverId = mAppContext.getResources().getIdentifier(film.getSmallPath(), "drawable", mAppContext.getPackageName());
