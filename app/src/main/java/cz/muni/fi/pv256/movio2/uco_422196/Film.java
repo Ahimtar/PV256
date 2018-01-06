@@ -8,26 +8,26 @@ import android.os.Parcelable;
  */
 
 public class Film implements Parcelable {
-    private long mRealeaseDate;
+    private long mReleaseDate;
     private String mCoverPath;
     private String mTitle;
-    private String mBackdrop;
+    private String mSmallPath;
     private float mPopularity;
 
-    public Film(long realeaseDate, String coverPath, String title, String backdrop, float popularity) {
-        mRealeaseDate = realeaseDate;
+    public Film(long releaseDate, String coverPath, String title, String smallPath, float popularity) {
+        mReleaseDate = releaseDate;
         mCoverPath = coverPath;
         mTitle = title;
-        mBackdrop = backdrop;
+        mSmallPath = smallPath;
         mPopularity = popularity;
     }
 
-    public long getRealeaseDate() {
-        return mRealeaseDate;
+    public long getReleaseDate() {
+        return mReleaseDate;
     }
 
-    public void setRealeaseDate(long realeaseDate) {
-        mRealeaseDate = realeaseDate;
+    public void setReleaseDate(long releaseDate) {
+        mReleaseDate = releaseDate;
     }
 
     public String getCoverPath() {
@@ -46,12 +46,12 @@ public class Film implements Parcelable {
         mTitle = title;
     }
 
-    public String getBackdrop() {
-        return mBackdrop;
+    public String getSmallPath() {
+        return mSmallPath;
     }
 
-    public void setBackdrop(String backdrop) {
-        mBackdrop = backdrop;
+    public void setSmallPath(String smallPath) {
+        mSmallPath = smallPath;
     }
 
     public float getPopularity() {
@@ -68,19 +68,19 @@ public class Film implements Parcelable {
     }
 
     protected Film(Parcel in) {
-        mRealeaseDate = in.readLong();
+        mReleaseDate = in.readLong();
         mCoverPath = in.readString();
         mTitle = in.readString();
-        mBackdrop = in.readString();
+        mSmallPath = in.readString();
         mPopularity = in.readFloat();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mRealeaseDate);
+        dest.writeLong(mReleaseDate);
         dest.writeString(mCoverPath);
         dest.writeString(mTitle);
-        dest.writeString(mBackdrop);
+        dest.writeString(mSmallPath);
         dest.writeFloat(mPopularity);
     }
 

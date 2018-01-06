@@ -3,11 +3,7 @@ package cz.muni.fi.pv256.movio2.uco_422196;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 public class PV256aktivita extends AppCompatActivity
         implements FilmListFragment.OnFilmSelectListener {

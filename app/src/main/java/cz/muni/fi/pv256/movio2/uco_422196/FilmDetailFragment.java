@@ -2,11 +2,13 @@ package cz.muni.fi.pv256.movio2.uco_422196;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -46,10 +48,15 @@ public class FilmDetailFragment extends Fragment {
 
         TextView titleTv = (TextView) view.findViewById(R.id.detail_film);
         TextView titleLowTv = (TextView) view.findViewById(R.id.detail_film_low);
+        ImageView imageView = (ImageView) view.findViewById(R.id.detail_icon);
 
         if (mFilm != null) {
             titleTv.setText(mFilm.getTitle());
             titleLowTv.setText(mFilm.getCoverPath());
+            int coverId = mContext.getResources().getIdentifier(mFilm.getCoverPath(), "drawable", mContext.getPackageName());
+            //Drawable cover = mContext.getDrawable(getActivity(), R.drawable.coverId);
+            Drawable cover = mContext.getResources().getDrawable(coverId);
+            imageView.setImageDrawable(cover);
         }
 
         return view;
