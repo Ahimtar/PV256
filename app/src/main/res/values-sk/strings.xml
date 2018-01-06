@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PV256projekt</string>
+    <string-array name="menu_items">
+        <item name="new">Nové</item>
+        <item name="popular">Populárne</item>
+    </string-array>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PV256プロジェクト</string>
+    <string-array name="menu_items">
+        <item name="new">新しい</item>
+        <item name="popular">人気</item>
+    </string-array>
+</resources>
