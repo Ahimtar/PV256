@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,10 +20,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by Ja on 4.12.2017.
@@ -98,11 +94,6 @@ public class FilmListFragment extends Fragment {
         return view;
     }
 
-    private Date getCurrentTime() {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
-        return cal.getTime();
-    }
-
     public boolean online() {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = cm.getActiveNetworkInfo();
@@ -159,9 +150,9 @@ public class FilmListFragment extends Fragment {
                 Log.d(TAG, "onPostExecute - thread: " + Thread.currentThread().getName());
             }
             if (result)
-                Toast.makeText(getActivity().getApplicationContext(), "Data sucesfully downloaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Download successful", Toast.LENGTH_SHORT).show();
             else
-                Toast.makeText(getActivity().getApplicationContext(), "Data not recieved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Download failed", Toast.LENGTH_SHORT).show();
 
             if (mFilmList.isEmpty()) {
                 mRecyclerView.setVisibility(View.GONE);
@@ -175,7 +166,9 @@ public class FilmListFragment extends Fragment {
 
         @Override
         protected void onCancelled() {
-            Log.d(TAG, "onCancelled - thread: " + Thread.currentThread().getName());
+            if(BuildConfig.logging) {
+                Log.d(TAG, "onCancelled - thread: " + Thread.currentThread().getName());
+            }
         }
     }
 }
