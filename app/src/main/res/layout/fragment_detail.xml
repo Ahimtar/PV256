@@ -13,15 +13,25 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/detail_small_icon"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
+
+        <ImageView
             android:id="@+id/detail_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_small_icon"
+            android:layout_gravity="start"/>
 
         <TextView
             android:id="@+id/detail_film"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detail_icon"
+            android:layout_toEndOf="@id/detail_icon"
+            android:layout_below="@id/detail_small_icon"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:textAppearance="?android:textAppearanceLarge"
@@ -32,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/detail_film"
+            android:layout_toEndOf="@id/detail_icon"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:textSize="12sp"
@@ -41,7 +52,7 @@
             android:id="@+id/detail_film_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detail_film_low"
+            android:layout_below="@id/detail_icon"
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
