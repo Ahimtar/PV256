@@ -2,7 +2,6 @@ package cz.muni.fi.pv256.movio2.uco_422196;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -55,11 +54,7 @@ public class FilmDetailFragment extends Fragment {
         if (mFilm != null) {
             titleTv.setText(mFilm.getTitle());
             titleLowTv.setText(mFilm.getCoverPath());
-            //int coverId = mContext.getResources().getIdentifier(mFilm.getCoverPath(), "drawable", mContext.getPackageName());
-            //Drawable cover = mContext.getResources().getDrawable(coverId);
-            //imageView.setImageDrawable(cover);
             Picasso.with(mContext).load("https://image.tmdb.org/t/p/w500/" + mFilm.getCoverPath()).into(imageView);
-            
         }
 
         return view;

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/list_item_icon"
+            android:id="@+id/list_item_small_icon"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:maxLines="1"
                 android:padding="10dp"
                 android:textColor="@android:color/white"
-                android:textSize="22sp"/>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/list_item_popularity"

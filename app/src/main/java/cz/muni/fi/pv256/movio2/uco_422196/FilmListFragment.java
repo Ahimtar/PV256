@@ -109,29 +109,6 @@ public class FilmListFragment extends Fragment {
         return (network != null && network.isConnected());
     }
 
-    private boolean fillRecyclerView(View rootView) {
-        mFilmList = new ArrayList<Object>();
-        mFilmList.add("New");
-        //mFilmList.addAll(FilmData.getInstance().getFilmNewList());
-        mFilmList.add("Popular");
-        //mFilmList.addAll(FilmData.getInstance().getFilmPopularList());
-
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_films);
-
-        if (mFilmList != null && !mFilmList.isEmpty()) {
-            setAdapter(mRecyclerView, mFilmList);
-            return true;
-        }
-        return false;
-    }
-
-    private void setAdapter(RecyclerView filmRV, final List<Object> filmList) {
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(filmList, mContext, this);
-        filmRV.setAdapter(adapter);
-        filmRV.setLayoutManager(new LinearLayoutManager(mContext));
-        filmRV.setItemAnimator(new DefaultItemAnimator());
-    }
-
     public void clickedFilm(int position)
     {
         mPosition = position;

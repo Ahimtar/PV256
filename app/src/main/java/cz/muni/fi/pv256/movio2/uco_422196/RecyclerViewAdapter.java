@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +56,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View view;
         if (viewIsFilm == 0){
             view = inflater.inflate(R.layout.category, parent, false);
-            //TextView text = (TextView) view.findViewById(R.id.list_item_text);
             return new CategoryViewHolder(view);
         } else {
             view = inflater.inflate(R.layout.list_item_film, parent, false);
@@ -76,11 +74,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             filmHolder.text.setText(film.getTitle());
             filmHolder.popularity.setText(String.valueOf(film.getPopularity()));
-            Picasso.with(mAppContext).load("https://image.tmdb.org/t/p/w500/" + film.getCoverPath()).into(filmHolder.coverImageView, new com.squareup.picasso.Callback() {
+            Picasso.with(mAppContext).load("https://image.tmdb.org/t/p/w500/" + film.getSmallPath()).into(filmHolder.smallImageView, new com.squareup.picasso.Callback() {
 
                 @Override
                 public void onSuccess() {
-                    Palette palette = Palette.generate(((BitmapDrawable)filmHolder.coverImageView.getDrawable()).getBitmap());
+                    Palette palette = Palette.generate(((BitmapDrawable)filmHolder.smallImageView.getDrawable()).getBitmap());
                     int backgroundColorOpaque = palette.getDarkVibrantColor(0x000000);
                     int backgroundColorTransparent = Color.argb(128, Color.red(backgroundColorOpaque), Color.green(backgroundColorOpaque), Color.blue(backgroundColorOpaque));
                     GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.TRANSPARENT, backgroundColorOpaque});
@@ -112,14 +110,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     static class FilmViewHolder extends RecyclerView.ViewHolder {
-        private ImageView coverImageView;
+        private ImageView smallImageView;
         public TextView text;
         public TextView popularity;
 
         public FilmViewHolder(View view) {
             super(view);
             text = (TextView) itemView.findViewById(R.id.list_item_text);
-            coverImageView = (ImageView) view.findViewById(R.id.list_item_icon);
+            smallImageView = (ImageView) view.findViewById(R.id.list_item_small_icon);
             popularity = (TextView) itemView.findViewById(R.id.list_item_popularity);
         }
     }

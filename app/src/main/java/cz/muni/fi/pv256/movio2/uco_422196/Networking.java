@@ -34,7 +34,7 @@ public class Networking {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String dateNowString = formatter.format(cal.getTime());
-        cal.add(Calendar.WEEK_OF_YEAR, -2);
+        cal.add(Calendar.WEEK_OF_YEAR, -1);
         String dateMonthAgoString = formatter.format(cal.getTime());
         String filter = "&primary_release_date.gte=" + dateMonthAgoString + "&primary_release_date.lte=" + dateNowString;
         final OkHttpClient client = new OkHttpClient();
