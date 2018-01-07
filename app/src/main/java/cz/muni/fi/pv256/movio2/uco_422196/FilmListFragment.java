@@ -2,6 +2,7 @@ package cz.muni.fi.pv256.movio2.uco_422196;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,8 +38,11 @@ public class FilmListFragment extends Fragment {
     private int mPosition = ListView.INVALID_POSITION;
     private OnFilmSelectListener mListener;
     private Context mContext;
-    private List<Object> mFilmList;
+    protected static List<Object> mFilmList = new ArrayList<>();
     private RecyclerView mRecyclerView;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
+    private ViewStub mEmptyView;
+    private DownloadingTask mDownloadingTask;
 
     @Override
     public void onAttach(Context activity) {
@@ -69,11 +76,9 @@ public class FilmListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        if (!fillRecyclerView(view)) {
-            view = inflater.inflate(R.layout.empty_layout, container, false);
-            if (!online()) {
-                ((TextView) (view.findViewById(R.id.emptyText))).setText("Offline");
-            }
+        mEmptyView = (ViewStub) view.findViewById(R.id.empty);
+        if (!online()) {
+            ((TextView) (view.findViewById(R.id.emptyText))).setText("Offline");
         }
         else {
             if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
@@ -83,6 +88,12 @@ public class FilmListFragment extends Fragment {
                     mRecyclerView.smoothScrollToPosition(mPosition);
                 }
             }
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_films);
+            mRecyclerViewAdapter = new RecyclerViewAdapter(new ArrayList<>(), getContext(), this);
+            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mDownloadingTask = new DownloadingTask();
+            mDownloadingTask.execute();
         }
         return view;
     }
@@ -101,9 +112,9 @@ public class FilmListFragment extends Fragment {
     private boolean fillRecyclerView(View rootView) {
         mFilmList = new ArrayList<Object>();
         mFilmList.add("New");
-        mFilmList.addAll(FilmData.getInstance().getFilmNewList());
+        //mFilmList.addAll(FilmData.getInstance().getFilmNewList());
         mFilmList.add("Popular");
-        mFilmList.addAll(FilmData.getInstance().getFilmPopularList());
+        //mFilmList.addAll(FilmData.getInstance().getFilmPopularList());
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_films);
 
@@ -135,16 +146,59 @@ public class FilmListFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    //private void setListener(Button button, final int position, final ArrayList<Film> filmList) {
-    //    button.setOnClickListener(new View.OnClickListener() {
-    //        public void onClick(View v) {
-    //            mPosition = position;
-    //            mListener.onFilmSelect(filmList.get(position));
-    //        }
-    //    });
-    //}
-
     public interface OnFilmSelectListener {
         void onFilmSelect(Film film);
+    }
+
+    private class DownloadingTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            if(BuildConfig.logging) {
+                Log.d(TAG, "doInBackground - thread: " + Thread.currentThread().getName());
+            }
+            try {
+                mFilmList.add("New");
+                mFilmList.addAll(Networking.getFilmNewList());
+                mFilmList.add("Popular");
+                mFilmList.addAll(Networking.getFilmPopularList());
+                FilmListFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerViewAdapter.dataUpdate(mFilmList);
+                    }
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(BuildConfig.logging) {
+                Log.d(TAG, "onPostExecute - thread: " + Thread.currentThread().getName());
+            }
+            if (result)
+                Toast.makeText(getActivity().getApplicationContext(), "Data sucesfully downloaded", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getActivity().getApplicationContext(), "Data not recieved", Toast.LENGTH_SHORT).show();
+
+            if (mFilmList.isEmpty()) {
+                mRecyclerView.setVisibility(View.GONE);
+                mEmptyView.setVisibility(View.VISIBLE);
+            } else {
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mEmptyView.setVisibility(View.GONE);
+            }
+            mDownloadingTask = null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            Log.d(TAG, "onCancelled - thread: " + Thread.currentThread().getName());
+        }
     }
 }

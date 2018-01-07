@@ -1,9 +1,8 @@
 package cz.muni.fi.pv256.movio2.uco_422196;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,16 +69,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(mFilmList.get(position) instanceof Film) {
 
-            FilmViewHolder filmHolder = (FilmViewHolder) holder;
-            Film film = (Film) mFilmList.get(position);
+            final FilmViewHolder filmHolder = (FilmViewHolder) holder;
+            final Film film = (Film) mFilmList.get(position);
             if (BuildConfig.logging) {
                 Log.d("Binding", "Binding " + film.getTitle());
             }
             filmHolder.text.setText(film.getTitle());
             filmHolder.popularity.setText(String.valueOf(film.getPopularity()));
-            int coverId = mAppContext.getResources().getIdentifier(film.getSmallPath(), "drawable", mAppContext.getPackageName());
-            Drawable cover = mAppContext.getResources().getDrawable(coverId);
-            filmHolder.coverImageView.setImageDrawable(cover);
+            Picasso.with(mAppContext).load("https://image.tmdb.org/t/p/w500/" + film.getCoverPath()).into(filmHolder.coverImageView, new com.squareup.picasso.Callback() {
+
+                @Override
+                public void onSuccess() {
+                    Palette palette = Palette.generate(((BitmapDrawable)filmHolder.coverImageView.getDrawable()).getBitmap());
+                    int backgroundColorOpaque = palette.getDarkVibrantColor(0x000000);
+                    int backgroundColorTransparent = Color.argb(128, Color.red(backgroundColorOpaque), Color.green(backgroundColorOpaque), Color.blue(backgroundColorOpaque));
+                    GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.TRANSPARENT, backgroundColorOpaque});
+                    filmHolder.text.setBackgroundColor(backgroundColorTransparent);
+                    filmHolder.popularity.setBackgroundColor(backgroundColorOpaque);
+                    filmHolder.itemView.setTag(film);
+                }
+
+                @Override
+                public void onError() {
+                    if (BuildConfig.logging)
+                        Log.e("Loading image failed", "Error loading backdrop image");
+                }
+            });
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,14 +102,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     mFilmListFragment.clickedFilm(position);
                 }
             });
-
-            Palette palette = Palette.generate(BitmapFactory.decodeResource(mAppContext.getResources(), coverId));
-            int backgroundColorOpaque = palette.getDarkVibrantColor(0x000000);
-            int backgroundColorTransparent = Color.argb(128, Color.red(backgroundColorOpaque), Color.green(backgroundColorOpaque), Color.blue(backgroundColorOpaque));
-            GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.TRANSPARENT, backgroundColorOpaque});
-            filmHolder.text.setBackgroundColor(backgroundColorTransparent);
-            filmHolder.popularity.setBackgroundColor(backgroundColorOpaque);
-            filmHolder.itemView.setTag(film);
         }
         else
         {
@@ -123,5 +131,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             text = (TextView) itemView.findViewById(R.id.category_type);
         }
+    }
+
+    public void dataUpdate(List<Object> data) {
+        this.mFilmList = data;
+        notifyDataSetChanged();
     }
 }
