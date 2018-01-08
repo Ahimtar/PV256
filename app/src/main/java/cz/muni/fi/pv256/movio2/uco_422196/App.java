@@ -11,6 +11,8 @@ import android.os.StrictMode;
 
 public class App extends Application {
 
+    public static final String API_KEY = "2ecbe6e664fc80573e3c18f711b34555";
+
     @Override
     public void onCreate() {
         super.onCreate();
