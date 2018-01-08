@@ -54,7 +54,7 @@ public class FilmDetailFragment extends Fragment {
 
         if (mFilm != null) {
             titleTv.setText(mFilm.getTitle());
-            titleLowTv.setText(mFilm.getCoverPath());
+            titleLowTv.setText(String.valueOf(mFilm.getPopularity()));
             descTv.setText(mFilm.getDescription());
             Picasso.with(mContext).load("https://image.tmdb.org/t/p/w500/" + mFilm.getCoverPath()).into(imageView);
             Picasso.with(mContext).load("https://image.tmdb.org/t/p/w500/" + mFilm.getSmallPath()).into(imageSmallView);
