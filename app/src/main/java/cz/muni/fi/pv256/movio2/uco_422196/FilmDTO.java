@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Locale;
  * Created by Ja on 6.1.2018.
  */
 
-public class FilmDTO {
+public class FilmDTO implements Serializable {
     @SerializedName("release_date")
     private String mReleaseDate;
     @SerializedName("poster_path")

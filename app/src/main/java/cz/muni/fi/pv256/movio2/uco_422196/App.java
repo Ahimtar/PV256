@@ -12,6 +12,7 @@ import android.os.StrictMode;
 public class App extends Application {
 
     public static final String API_KEY = "2ecbe6e664fc80573e3c18f711b34555";
+    public static final String API_URL = "http://api.themoviedb.org/";
 
     @Override
     public void onCreate() {
