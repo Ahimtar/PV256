@@ -15,6 +15,8 @@ import java.util.Locale;
  */
 
 public class FilmDTO implements Serializable {
+    @SerializedName("id")
+    private String mId;
     @SerializedName("release_date")
     private String mReleaseDate;
     @SerializedName("poster_path")
@@ -28,13 +30,22 @@ public class FilmDTO implements Serializable {
     @SerializedName("overview")
     private String mDescription;
 
-    public FilmDTO(String releaseDate, String coverPath, String title, String smallPath, String popularity, String description) {
+    public FilmDTO(String id, String releaseDate, String coverPath, String title, String smallPath, String popularity, String description) {
+        mId = id;
         mReleaseDate = releaseDate;
         mCoverPath = coverPath;
         mTitle = title;
         mSmallPath = smallPath;
         mPopularity = popularity;
         mDescription = description;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public Long getIdAsLong() {
+        return Long.parseLong(getId());
     }
 
     public String getReleaseDate() {

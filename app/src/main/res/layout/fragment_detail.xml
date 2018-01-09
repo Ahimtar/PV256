@@ -11,9 +11,11 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/detail_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:background="@color/primary_dark_material_light_1"
             android:gravity="top"
             android:orientation="vertical">
 
@@ -33,6 +35,17 @@
                 android:layout_marginTop="-34dp"
                 android:layout_gravity="start"/>
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_small_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="40dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="-40dp"
+                android:src="@drawable/add_favourites"/>
+
             <TextView
                 android:id="@+id/detail_film"
                 android:layout_width="wrap_content"
@@ -45,15 +58,27 @@
                 android:textSize="22sp"/>
 
             <TextView
-                android:id="@+id/detail_film_low"
+                android:id="@+id/detail_film_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detail_film"
                 android:layout_toEndOf="@id/detail_icon"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textAppearance="?android:textAppearanceLarge"/>
+
+            <TextView
+                android:id="@+id/detail_film_popularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_film_date"
+                android:layout_toEndOf="@id/detail_icon"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:textSize="28sp"
                 android:textAppearance="?android:textAppearanceLarge"/>
+
         </RelativeLayout>
 
         <TextView

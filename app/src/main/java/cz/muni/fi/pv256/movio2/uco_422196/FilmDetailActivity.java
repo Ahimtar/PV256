@@ -11,14 +11,15 @@ import android.support.v4.app.FragmentManager;
 public class FilmDetailActivity extends AppCompatActivity {
 
     public static final String EXTRAFILM = "extrafilm";
+    public static final String SWITCH = "switch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        Film film = getIntent().getParcelableExtra(EXTRAFILM);
 
             if(savedInstanceState == null){
-            Film film = getIntent().getParcelableExtra(EXTRAFILM);
             FragmentManager fm = getSupportFragmentManager();
             FilmDetailFragment fragment = (FilmDetailFragment) fm.findFragmentById(R.id.film_detail_container);
 

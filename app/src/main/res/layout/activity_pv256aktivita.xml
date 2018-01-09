@@ -6,9 +6,16 @@
                                         xmlns:tools="http://schemas.android.com/tools"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:background="?attr/colorAccent"
+                                        android:background="@color/colorPrimary"
                                         android:id="@+id/activity_main"
                                         tools:context="cz.muni.fi.pv256.movio2.uco_422196.PV256aktivita">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorAccent"
+        android:theme="@style/AppTheme"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"

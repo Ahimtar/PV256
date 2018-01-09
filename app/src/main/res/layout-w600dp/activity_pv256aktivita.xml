@@ -21,7 +21,7 @@
             android:textSize="10pt"/>
 
         <fragment
-            android:id="@+id/fragment_film_list"
+            android:id="@+id/fragment_list"
             android:name="cz.muni.fi.pv256.movio2.uco_422196.FilmListFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
