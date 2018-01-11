@@ -2,35 +2,24 @@
 <!-- by width -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="?attr/colorAccent"
               android:orientation="horizontal"
-              android:id="@+id/drawer_layout"
               tools:context="cz.muni.fi.pv256.movio2.uco_422196.PV256aktivita">
 
-        <TextView
-            android:id="@+id/detail_film"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="10pt"/>
+    <fragment
+        android:id="@+id/fragment_list"
+        android:name="cz.muni.fi.pv256.movio2.uco_422196.FilmListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        tools:layout="@android:layout/list_content" />
 
-        <fragment
-            android:id="@+id/fragment_list"
-            android:name="cz.muni.fi.pv256.movio2.uco_422196.FilmListFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            tools:layout="@android:layout/list_content" />
-
-        <FrameLayout
-            android:id="@+id/film_detail_container"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4" />
+    <FrameLayout
+        android:id="@+id/film_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4" />
 </LinearLayout>

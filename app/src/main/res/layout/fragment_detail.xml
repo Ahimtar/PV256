@@ -35,17 +35,6 @@
                 android:layout_marginTop="-34dp"
                 android:layout_gravity="start"/>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add_favourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/detail_small_icon"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="40dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="-40dp"
-                android:src="@drawable/add_favourites"/>
-
             <TextView
                 android:id="@+id/detail_film"
                 android:layout_width="wrap_content"
@@ -56,6 +45,16 @@
                 android:layout_marginTop="15dp"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textSize="22sp"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_film"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="35dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/add_favourites"/>
 
             <TextView
                 android:id="@+id/detail_film_date"

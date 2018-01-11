@@ -61,10 +61,12 @@ public class FilmManager {
     public List<Film> getFavouriteFilms() {
         Cursor cursor = mDatabase.query(FilmContract.FilmEntry.TABLE_NAME, FILM_COLUMNS, null, null, null, null, null);
         List<Film> films = new ArrayList();
-        if (cursor != null && cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                films.add(getFilm(cursor));
-                cursor.moveToNext();
+        if (cursor != null){
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    films.add(getFilm(cursor));
+                    cursor.moveToNext();
+                }
             }
             cursor.close();
         }

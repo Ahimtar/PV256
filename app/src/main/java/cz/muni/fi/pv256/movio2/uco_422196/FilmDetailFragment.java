@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +54,12 @@ public class FilmDetailFragment extends Fragment {
         mDbHelper = new FilmDbHelper(getActivity());
         mDatabase = mDbHelper.getWritableDatabase();
         mFilmManager = new FilmManager(mDatabase);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDatabase.close();
     }
 
     @Nullable
@@ -109,10 +114,10 @@ public class FilmDetailFragment extends Fragment {
                     Toast.makeText(getActivity(), mFilm.getTitle() + " added to database.", Toast.LENGTH_LONG).show();
                     floatingActionButton.setImageResource(R.drawable.remove_favourites);
                 }
+                if (getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_list) != null) {
+                    ((FilmListFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_list)).updateData();
+                }
             }
         });
-        if (getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_list) != null) {
-            ((FilmListFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_list)).updateData();
-        }
     }
 }
