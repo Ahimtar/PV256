@@ -99,6 +99,8 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         mEmptyView = (ViewStub) view.findViewById(R.id.empty);
+        mEmptyView.setVisibility(View.VISIBLE);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
@@ -118,6 +120,10 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
             getLoaderManager().restartLoader(1, null, this);
         } else {
             if(mFilmList == null  || mFilmList.isEmpty()) {
+
+                mEmptyView.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+
                 Intent intent = new Intent(getActivity(), DownloadService.class);
                 getActivity().startService(intent);
 
@@ -173,7 +179,10 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
         for (Film film : data) {
             mFavList.add(film);
         }
-        mRecyclerViewAdapter.dataUpdate(mFavList);
+        //mRecyclerViewAdapter.dataUpdate(mFavList);
+        if (mIsFavourite) {
+            updateViewAdapter(mFavList);
+        }
         mDatabase.close();
     }
 
@@ -222,6 +231,8 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
 
                 if (mRecyclerViewAdapter != null) {
                     mRecyclerViewAdapter.dataUpdate(mFilmList);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mEmptyView.setVisibility(View.GONE);
                 }
             }
             else {

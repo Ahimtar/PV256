@@ -56,7 +56,7 @@ public class DownloadService extends IntentService {
 
         try {
             if(!online(this)) {
-                Toast.makeText(this, "Offline", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Offline", Toast.LENGTH_LONG).show();
                 broadcastIntent.putExtra(ERROR, CONNECTION_ERROR);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
                 errorDownloadNotification();
