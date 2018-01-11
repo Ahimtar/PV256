@@ -4,4 +4,6 @@
         <item name="new">新しい</item>
         <item name="popular">人気</item>
     </string-array>
+    <string name="content_authority">cz.muni.fi.pv256.movio2.uco_422196.provider</string>
+    <string name="sync_account_type">cz.muni.fi.pv256.movio2.uco_422196.sync</string>
 </resources>

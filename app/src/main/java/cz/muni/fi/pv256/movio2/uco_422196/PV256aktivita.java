@@ -1,5 +1,8 @@
 package cz.muni.fi.pv256.movio2.uco_422196;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -8,6 +11,9 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.Toast;
+
+import static cz.muni.fi.pv256.movio2.uco_422196.UpdaterSyncAdapter.SYNC_FINISHED;
 
 public class PV256aktivita extends AppCompatActivity implements FilmListFragment.OnFilmSelectListener {
 
@@ -30,11 +36,33 @@ public class PV256aktivita extends AppCompatActivity implements FilmListFragment
         } else {
             mTwoPane = false;
         }
-        //toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (savedInstanceState != null && savedInstanceState.containsKey("switch")) {
             mSwitched = savedInstanceState.getBoolean("switch");
         }
+        UpdaterSyncAdapter.initializeSyncAdapter(this);
     }
+
+    private static IntentFilter syncIntentFilter = new IntentFilter(SYNC_FINISHED);
+
+    private BroadcastReceiver syncFinishedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "Data updated", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(syncFinishedReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(syncFinishedReceiver, syncIntentFilter);
+    }
+
 
     @Override
     public void onFilmSelect(Film film) {
