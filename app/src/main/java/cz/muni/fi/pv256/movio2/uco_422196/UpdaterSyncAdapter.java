@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewDebug;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -118,6 +119,7 @@ public class UpdaterSyncAdapter extends AbstractThreadedSyncAdapter {
                     PendingIntent pIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     n.setContentTitle("PV256project").setAutoCancel(true)
                             .setContentText(updatedFilm.getTitle() + " updated.")
+                            .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentIntent(pIntent);
 
                     NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);

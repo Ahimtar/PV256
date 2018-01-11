@@ -58,6 +58,9 @@ android {
             versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}-${versionCode}"
         }
     }
+    lintOptions{
+        disable 'MissingTranslation'
+    }
 
     sourceSets {
         paid {

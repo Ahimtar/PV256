@@ -216,7 +216,6 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
             String error = intent.getStringExtra(ERROR);
             if(error.equals(NO_ERROR)) {
                 mFilmList = new ArrayList<>();
-                //mFilmList.clear();
                 ArrayList<FilmDTO> filmNewList = (ArrayList<FilmDTO>)intent.getSerializableExtra(NEW);
                 ArrayList<FilmDTO> filmPopularList = (ArrayList<FilmDTO>)intent.getSerializableExtra(POPULAR);
                 mFilmList.add("New");
@@ -238,7 +237,7 @@ public class FilmListFragment extends Fragment implements LoaderManager.LoaderCa
 
     private void addListToMFilmList(ArrayList<FilmDTO> filmList){
         for (FilmDTO m : filmList) {
-            Film film = new Film(m.getReleaseDateAsLong(), m.getReleaseDateAsLong(), m.getCoverPath(), m.getTitle(), m.getSmallPath(), m.getPopularityAsFloat(), m.getDescription());
+            Film film = new Film(Long.parseLong(m.getId(),10), m.getReleaseDateAsLong(), m.getCoverPath(), m.getTitle(), m.getSmallPath(), m.getPopularityAsFloat(), m.getDescription());
             mFilmList.add(film);
         }
     }

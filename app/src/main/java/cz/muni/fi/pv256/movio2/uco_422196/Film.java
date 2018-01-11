@@ -30,7 +30,7 @@ public class Film implements Parcelable {
         return mId;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         mId = id;
     }
 

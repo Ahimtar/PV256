@@ -8,8 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -18,8 +21,9 @@ import static cz.muni.fi.pv256.movio2.uco_422196.UpdaterSyncAdapter.SYNC_FINISHE
 public class PV256aktivita extends AppCompatActivity implements FilmListFragment.OnFilmSelectListener {
 
     private boolean mTwoPane;
-    private SwitchCompat mSwitchButton;
     private boolean mSwitched;
+    private SwitchCompat mSwitchButton;
+    private Button mRefreshButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,9 +87,9 @@ public class PV256aktivita extends AppCompatActivity implements FilmListFragment
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        MenuItem item = menu.findItem(R.id.menuSwitch);
-        item.setActionView(R.layout.menu_switch);
-        mSwitchButton = (SwitchCompat) item.getActionView().findViewById(R.id.switchForActionBar);
+        MenuItem itemSwitch = menu.findItem(R.id.menuSwitch);
+        itemSwitch.setActionView(R.layout.menu_switch);
+        mSwitchButton = (SwitchCompat) itemSwitch.getActionView().findViewById(R.id.switchForActionBar);
         mSwitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -105,6 +109,15 @@ public class PV256aktivita extends AppCompatActivity implements FilmListFragment
             }
         });
         mSwitchButton.setChecked(mSwitched);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuRefresh){
+            UpdaterSyncAdapter.syncImmediately(getApplicationContext());
+            Toast.makeText(getApplicationContext(), "Updating film data", Toast.LENGTH_SHORT).show();
+        }
         return true;
     }
 
