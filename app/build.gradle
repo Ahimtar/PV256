@@ -44,17 +44,20 @@ android {
         }
         debug {
             applicationIdSuffix '.debug'
+            versionNameSuffix "${versionBuild}-${defaultConfig.versionCode}"
         }
     }
 
     productFlavors {
         flavor {
             buildConfigField "boolean", "logging", "false"
+            manifestPlaceholders = [ appLabel: "Movio2" ]
             versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         }
         flavora {
-            applicationIdSuffix ".flavora"
+            applicationId "cz.muni.fi.pv256.movio2.uco_422196.flavora"
             buildConfigField "boolean", "logging", "true"
+            manifestPlaceholders = [ appLabel: "Movio2 Flavora" ]
             versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}-${versionCode}"
         }
     }

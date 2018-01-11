@@ -14,7 +14,7 @@
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="${appLabel}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -60,7 +60,7 @@
         </service>
         <provider
             android:name=".SyncContentProvider"
-            android:authorities="@string/content_authority"
+            android:authorities="${applicationId}.contentprovider"
             android:exported="false"
             android:syncable="true"/>
         <receiver android:name=".SyncBroadcastReceiver" >

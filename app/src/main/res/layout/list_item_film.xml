@@ -35,12 +35,12 @@
 
             <TextView
                 android:id="@+id/list_item_popularity"
-                android:layout_width="38dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@android:color/white"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:width="50dp"/>
         </RelativeLayout>
     </RelativeLayout>
