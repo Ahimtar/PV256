@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+    <item
+        android:id="@+id/menuRefresh"
+        android:layout_width="wrap_content"
+        android:actionLayout="@layout/menu_refresh"
+        android:icon="@drawable/refresh"
+        android:title=""
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menuSwitch"
+        android:actionLayout="@layout/menu_switch"
+        android:layout_width="wrap_content"
+        android:title=""
+        app:showAsAction="always"/>
+</menu>

@@ -1,7 +1,7 @@
 def versionMajor = 0
 def versionMinor = 1
 def versionPatch = 0
-def versionBuild = 0
+def versionBuild = 1
 
 apply plugin: 'com.android.application'
 
@@ -44,19 +44,25 @@ android {
         }
         debug {
             applicationIdSuffix '.debug'
+            versionNameSuffix "${versionBuild}-${defaultConfig.versionCode}"
         }
     }
 
     productFlavors {
         flavor {
             buildConfigField "boolean", "logging", "false"
+            manifestPlaceholders = [ appLabel: "Movio2" ]
             versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         }
         flavora {
-            applicationIdSuffix ".flavora"
+            applicationId "cz.muni.fi.pv256.movio2.uco_422196.flavora"
             buildConfigField "boolean", "logging", "true"
+            manifestPlaceholders = [ appLabel: "Movio2 Flavora" ]
             versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}-${versionCode}"
         }
+    }
+    lintOptions{
+        disable 'MissingTranslation'
     }
 
     sourceSets {
@@ -83,4 +89,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.android.support:design:25.3.1'
 }

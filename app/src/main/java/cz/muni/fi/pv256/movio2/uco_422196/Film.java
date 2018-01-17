@@ -8,20 +8,30 @@ import android.os.Parcelable;
  */
 
 public class Film implements Parcelable {
+    public Long mId;
     private long mReleaseDate;
     private String mCoverPath;
-    private String mDescription;
     private String mTitle;
     private String mSmallPath;
     private float mPopularity;
+    private String mDescription;
 
-    public Film(long releaseDate, String coverPath, String title, String smallPath, float popularity, String description) {
+    public Film(Long id, Long releaseDate, String coverPath, String title, String smallPath, float popularity, String description) {
+        mId = id;
         mReleaseDate = releaseDate;
         mCoverPath = coverPath;
         mTitle = title;
         mSmallPath = smallPath;
         mPopularity = popularity;
         mDescription = description;
+    }
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
     }
 
     public long getReleaseDate() {
@@ -64,9 +74,13 @@ public class Film implements Parcelable {
         mPopularity = popularity;
     }
 
-    public String getDescription() { return mDescription; }
+    public String getDescription() {
+        return mDescription;
+    }
 
-    public void setDescription(String description) { mDescription = description; }
+    public void setDescription(String description) {
+        mDescription = description;
+    }
 
     @Override
     public int describeContents() {
@@ -74,6 +88,7 @@ public class Film implements Parcelable {
     }
 
     protected Film(Parcel in) {
+        mId = in.readLong();
         mReleaseDate = in.readLong();
         mCoverPath = in.readString();
         mTitle = in.readString();
@@ -84,6 +99,7 @@ public class Film implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mId);
         dest.writeLong(mReleaseDate);
         dest.writeString(mCoverPath);
         dest.writeString(mTitle);
